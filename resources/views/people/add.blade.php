@@ -10,8 +10,6 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        
         <!-- Styles -->
         <style>
             html, body {
@@ -21,6 +19,10 @@
                 font-weight: 600;
                 height: 100vh;
                 margin: 0;
+            }
+
+            strong {
+              font-weight: 700;
             }
 
             .full-height {
@@ -88,65 +90,47 @@
             <div class="content">
                 <br>
                 <div class="title m-b-md">
-                    People List
+                    People List 
                 </div>
                 <br>
-                <div>
-                <form action="{{route('people.delete')}}" method="post" id="delForm">
-                  {{csrf_field()}}
-                  <input type="hidden" name="id" value="" />
-                </form>
-
-                 @if(session("error"))
+                @if(session("error"))
                  <p style="darkred;">{{session("error")}}</p>
                  @elseif(session("status"))
                  <p style="blue;">{{session("status")}}</p>
                  @endif
-                 <br>
-                 <p style="float: left;"> <a href="{{route('people.add')}}"> Add New Person</a> </p>
+                <div>
+                <p style="float: left;"> <a href="{{route('people.index')}}"> << Back</a> </p>
                   <table>
                       <thead>
                           <tr>
-                              <th>Name</th>
-                              <th>Email</th>
-                              <th></th>
                               <th></th>
                               <th></th>
                           </tr>
                       </thead>
                       <tbody>
-                         @foreach($people as $person)
+                      <form action="{{route('people.add')}}" method="POST">
+                         {{csrf_field()}}
                           <tr>
-                              <td>{{$person->name}}</td>
-                              <td>{{$person->email}}</td>
-                              <td><a href="{{ route('people.view', ['id' => $person->id]) }}">View</a></td>
-                              <td><a href="{{ route('people.update', ['id' => $person->id]) }}">Update</a></td>
-                              <td><a class="del" data-id="{{$person->id}}" href="#">Delete</a></td>
+                              <td><strong>Name: </strong></td>
+                              <td><input type="text" name="name" id="name" placeholder="Name here" required></td>
                           </tr>
-                         @endforeach 
+                          <tr>
+                              <td><strong>Email: </strong></td>    
+                              <td><input type="email" name="email" id="email" placeholder="example@gmail.com" required></td>
+                          </tr>
+                          <tr>
+                              <td><strong>Phone: </strong></td>    
+                              <td><input type="tel" name="phone" id="phone" required placeholder="090xxxx"></td>
+                          </tr>
+                           <tr>
+                              <td></td>     
+                              <td><input type="submit" value="Save"></td>   
+                          </tr>
                       </tbody>
                   </table>
                 </div>
 
             </div>
         </div>
-        <script type="text/javascript">
-
-        $().ready(function() {
-
-          $(".del").on("click", function() {
-            var id = $(this).attr("data-id");
-            console.log("id = " + id);
-
-            if(window.confirm("Are you sure you wanna delete this person?")) {
-              $("input[name='id']").val(id);
-              console.log("form id = " + $("input[name='id']").val() );
-              document.getElementById("delForm").submit();
-            }
-          });
-
-        });
-
-        </script>
     </body>
 </html>

@@ -17,5 +17,7 @@ Route::get('/', function () {
 
 Route::get("/people", "PersonController@index")->name("people.index");
 Route::post("/people/delete", "PersonController@delete")->name("people.delete");
+Route::match(["GET", "POST"], "/people/add", "PersonController@add")->name("people.add");
+Route::match(["GET", "POST"], "/people/update/{id?}", "PersonController@update")->name("people.update");
 Route::get("/people/{id}", "PersonController@view")->name("people.view");
 
