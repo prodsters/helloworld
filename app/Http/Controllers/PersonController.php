@@ -8,6 +8,7 @@ use Log;
 
 class PersonController extends Controller
 {
+
     
 
 	public function index() {

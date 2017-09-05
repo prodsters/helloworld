@@ -15,9 +15,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get("/people", "PersonController@index")->name("people.index");
-Route::post("/people/delete", "PersonController@delete")->name("people.delete");
-Route::match(["GET", "POST"], "/people/add", "PersonController@add")->name("people.add");
-Route::match(["GET", "POST"], "/people/update/{id?}", "PersonController@update")->name("people.update");
-Route::get("/people/{id}", "PersonController@view")->name("people.view");
+Route::get("/people", "PersonController@index")->name("people.index")->middleware("auth");
+Route::post("/people/delete", "PersonController@delete")->name("people.delete")->middleware("auth");
+Route::match(["GET", "POST"], "/people/add", "PersonController@add")->name("people.add")->middleware("auth");
+Route::match(["GET", "POST"], "/people/update/{id?}", "PersonController@update")->name("people.update")->middleware("auth");
+Route::get("/people/{id}", "PersonController@view")->name("people.view")->middleware("auth");
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
